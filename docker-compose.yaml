@@ -11,6 +11,7 @@ services:
       POSTGRES_DB: books_service
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - pgdata:/var/lib/postgresql/data
     restart: unless-stopped
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U docker_usr -d books_service" ]
@@ -38,6 +39,7 @@ services:
     build: .
     ports:
       - "8081:8081"
+      - "9090:9090"
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://books-service-postgresql:5432/books_service
     depends_on:

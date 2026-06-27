@@ -1,0 +1,53 @@
+package com.wesleyserrano.books_catalog_service.books;
+
+import com.wesleyserrano.books_catalog_service.authors.Author;
+import com.wesleyserrano.books_catalog_service.model.BaseEntity;
+import jakarta.persistence.Access;
+import jakarta.persistence.AccessType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.Objects;
+
+@Entity
+@Access(AccessType.FIELD)
+@Getter
+@Setter
+@NoArgsConstructor
+public class Book extends BaseEntity {
+    private String name;
+    private long pageCount;
+
+    @ManyToOne
+    private Author author;
+
+    public Book(String id, String name, long pageCount) {
+        this.id = id;
+        this.name = name;
+        this.pageCount = pageCount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return pageCount == book.pageCount && Objects.equals(id, book.id) && Objects.equals(name, book.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, pageCount);
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", pageCount=" + pageCount +
+                '}';
+    }
+}

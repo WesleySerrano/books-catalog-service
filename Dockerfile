@@ -7,6 +7,7 @@ WORKDIR /app
 # Copy only the dependency definition file to cache downloaded libraries
 COPY pom.xml .
 
+RUN apk add --no-cache libc6-compat
 # Download dependencies in offline mode (saves time on subsequent builds)
 RUN mvn dependency:go-offline -B
 
@@ -36,6 +37,7 @@ USER appuser
 
 # Expose the default Spring Boot port
 EXPOSE 8081
+EXPOSE 9090
 
 # Configure JVM flags for efficient container memory usage and run the application
 ENTRYPOINT ["java", "-XX:+UseG1GC", "-jar", "app.jar"]

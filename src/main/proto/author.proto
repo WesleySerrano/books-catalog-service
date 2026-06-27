@@ -1,0 +1,31 @@
+syntax = "proto3";
+package author_grpc;
+import "google/protobuf/empty.proto";
+option java_multiple_files = true;
+option java_package = "com.wesleyserrano.books_catalog_service.proto";
+option java_outer_classname = "AuthorProto";
+
+message AuthorGrpc {
+    string id = 1;
+    string firstName = 2;
+    string lastName = 3;
+}
+
+message ListAuthorGrpc {
+   repeated AuthorGrpc authors = 1;
+}
+
+service AuthorGrpcService {
+    rpc requestAuthor(AuthorSearch) returns (AuthorGrpc) {}
+    rpc requestAuthors(google.protobuf.Empty) returns (ListAuthorGrpc) {}
+    rpc addAuthor(AddAuthor) returns (AuthorGrpc) {}
+}
+
+message AuthorSearch {
+    string id = 1;
+}
+
+message AddAuthor {
+    string firstName = 1;
+    string lastName = 2;
+}
